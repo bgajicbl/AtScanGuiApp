@@ -28,39 +28,6 @@ import org.apache.chemistry.opencmis.commons.exceptions.CmisUnauthorizedExceptio
 @Path("/alfresco")
 public class DocumentWebServices {
 
-	/*
-	 * @GET
-	 * 
-	 * @Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	 * 
-	 * @Path("/documents/invoice") public Response
-	 * getInvoceByCustomer(@QueryParam("customerId") String customerId,
-	 * 
-	 * @QueryParam("invoiceNo") String invoiceNo, @QueryParam("alf_ticket")
-	 * String ticket) {
-	 * 
-	 * String ebill = customerId + SEPARATOR + invoiceNo + EBILL_SUFFIX; String
-	 * post = customerId + SEPARATOR + invoiceNo + POST_SUFFIX;
-	 * 
-	 * System.out.println(ebill);
-	 * 
-	 * Session session = null; try { session = getSession(ticket); } catch
-	 * (CmisUnauthorizedException e) { return
-	 * Response.status(Response.Status.UNAUTHORIZED).build(); } QueryStatement
-	 * qs = session.createQueryStatement(QUERY); qs.setString(1, ebill);
-	 * 
-	 * ItemIterable<QueryResult> results = session.query(qs.toQueryString(),
-	 * false); // if there is not eBill we are searching for post if
-	 * (results.getTotalNumItems() == 0) {
-	 * 
-	 * qs.setString(1, post); results = session.query(qs.toQueryString(),
-	 * false); } // if there is not post either we are returning HTTP 404 if
-	 * (results.getTotalNumItems() == 0) { return
-	 * Response.status(Response.Status.NOT_FOUND).build(); }
-	 * 
-	 * return createResponse(session, results); }
-	 */
-
 	@GET
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@Path("/documents/invoice")
@@ -76,7 +43,7 @@ public class DocumentWebServices {
 			post = customerId + SEPARATOR + subscriberId + SEPARATOR + invoiceNo + POST_SUFFIX;
 		}
 
-		System.out.println(ebill);
+		//System.out.println(ebill);
 
 		Session session = null;
 		try {
@@ -106,9 +73,14 @@ public class DocumentWebServices {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@Path("/documents/een")
 	public Response getEenByNumber(@QueryParam("customerId") String customerId,
-			@QueryParam("invoiceNo") String invoiceNo, @QueryParam("alf_ticket") String ticket) {
+			@QueryParam("subscriberId") String subscriberId, @QueryParam("invoiceNo") String invoiceNo,
+			@QueryParam("alf_ticket") String ticket) {
 
 		String een = customerId + SEPARATOR + invoiceNo + EEN_SUFFIX;
+		
+		if (subscriberId != null && subscriberId.length() > 1) {
+			een = customerId + SEPARATOR + subscriberId + SEPARATOR + invoiceNo + EEN_SUFFIX;
+		}
 
 		Session session = null;
 		try {
@@ -118,9 +90,9 @@ public class DocumentWebServices {
 		}
 		QueryStatement qs = session.createQueryStatement(QUERY);
 		qs.setString(1, een);
-		System.out.println("een: " + een);
+		//System.out.println("een: " + een);
 		ItemIterable<QueryResult> results = session.query(qs.toQueryString(), false);
-		System.out.println("res: " + results.getTotalNumItems());
+		//System.out.println("res: " + results.getTotalNumItems());
 
 		// if there is no een we are returning HTTP 404
 		if (results.getTotalNumItems() == 0) {
