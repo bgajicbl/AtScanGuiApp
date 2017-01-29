@@ -41,11 +41,11 @@ public class DocumentWebServices {
 		if (subscriberId != null && subscriberId.length() > 1) {
 			ebill = customerId + SEPARATOR + subscriberId + SEPARATOR + invoiceNo + EBILL_SUFFIX;
 			post = customerId + SEPARATOR + subscriberId + SEPARATOR + invoiceNo + POST_SUFFIX;
-		}
+		} 
 
-		//System.out.println(ebill);
+		System.out.println(ebill);  
 
-		Session session = null;
+		Session session = null;  
 		try {
 			session = getSession(ticket);
 		} catch (CmisUnauthorizedException e) {
