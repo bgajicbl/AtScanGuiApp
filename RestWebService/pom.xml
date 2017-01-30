@@ -6,6 +6,7 @@
 	<version>2.0</version>
 	<packaging>war</packaging>
 	<build>
+	<finalName>RestWebService</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>

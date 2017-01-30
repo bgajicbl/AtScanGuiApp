@@ -43,7 +43,7 @@ public class DocumentWebServices {
 			post = customerId + SEPARATOR + subscriberId + SEPARATOR + invoiceNo + POST_SUFFIX;
 		} 
 
-		System.out.println(ebill);  
+		//System.out.println(ebill);  
 
 		Session session = null;  
 		try {
