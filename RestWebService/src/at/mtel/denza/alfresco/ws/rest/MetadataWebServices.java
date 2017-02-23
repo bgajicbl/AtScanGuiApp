@@ -134,14 +134,19 @@ public class MetadataWebServices {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/insert")
-	public Response insertMetadata(@QueryParam("customerId") int customerId, @QueryParam("fileName") String fileName,
-			@QueryParam("nodeRef") String nodeRef, @QueryParam("period") int period,
+	public Response insertMetadata(@QueryParam("customerId") int customerId, @QueryParam("subscriberId") String subscriberId,
+			@QueryParam("fileName") String fileName, @QueryParam("nodeRef") String nodeRef, @QueryParam("period") int period,
 			@QueryParam("documentType") int doctype, @QueryParam("user") int user) {
 		Metadata m = new Metadata();
 		// System.out.println(FunctionIntegrator.getCustomer(String.valueOf(customerId)).size());
 		Customer c = FunctionIntegrator.getCustomer(String.valueOf(customerId)).get(0);
+		Subscriber sub = null;
+		if(subscriberId != null){
+			sub = FunctionIntegrator.getSubscriber(subscriberId).get(0);
+		}
 		Document d = FunctionIntegrator.getDocument(doctype);
 		m.setCustomer(c);
+		m.setSubscriber(sub);
 		m.setDocument(d);
 		m.setNoderef(nodeRef);
 		m.setPeriod(DateUtil.getDateFromString(String.valueOf(period)));

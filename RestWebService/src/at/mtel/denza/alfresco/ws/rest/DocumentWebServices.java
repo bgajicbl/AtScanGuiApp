@@ -26,7 +26,7 @@ import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisUnauthorizedException;
 
 @Path("/alfresco")
-public class DocumentWebServices {
+public class DocumentWebServices { 
 
 	@GET
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
@@ -137,5 +137,5 @@ public class DocumentWebServices {
 	public static String EBILL_SUFFIX = "_eBill.PDF";
 	public static String POST_SUFFIX = "_post.PDF";
 	public static String EEN_SUFFIX = "_een.PDF";
-	public static String SEPARATOR = "_";
+	public static String SEPARATOR = "-";
 }
