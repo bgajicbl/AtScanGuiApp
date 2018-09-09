@@ -51,7 +51,14 @@ public class LoginView extends VerticalLayout implements View {
 				params.put("u", tf.getValue());
 				params.put("p", pf.getValue());
 				User u = new User();
-				List<User> lista = ListUtil.genericGetFromWebService("users/check", u, params);
+				List<User> lista = null;
+				try {
+					lista = ListUtil.genericGetFromWebService("users/check", u, params);
+				}catch(Exception e) {
+					Notification.show("Greska u komunikaciji sa servisom za autentifikaciju.", Notification.Type.ERROR_MESSAGE);
+					e.printStackTrace();
+					return;
+				}
 				if (lista != null && lista.get(0) != null) {
 					getSession().setAttribute(User.class, lista.get(0));
 					getUI().getNavigator().navigateTo(NavigatorUI.STARTVIEW);
