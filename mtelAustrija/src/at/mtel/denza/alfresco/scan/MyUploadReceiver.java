@@ -46,8 +46,9 @@ public class MyUploadReceiver implements Receiver, SucceededListener {
 			file = new File(sb.toString());
 			fos = new FileOutputStream(file);
 		}
-		catch (final java.io.FileNotFoundException e) {
+		catch (Exception e) {
 			Notification.show("Could not open file", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+			e.printStackTrace();
 			return null;
 		}
 		try {

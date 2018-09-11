@@ -23,6 +23,7 @@ public class NavigatorUI extends UI {
 		navigator.addView(LOGINVIEW, LoginView.class);
 		navigator.addView(STARTVIEW, DocumentsScanView.class);
 		navigator.addView(ADMINVIEW, AdminView.class);
+		navigator.setErrorView(LoginView.class);
 	}
 	
 	protected void logOff(){
