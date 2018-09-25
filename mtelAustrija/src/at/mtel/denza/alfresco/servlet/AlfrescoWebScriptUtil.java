@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class AlfrescoWebScriptUtil {
 	
-	public static String getTicket() throws IOException {
+	public static String getTicket() throws Exception {
 		URL url = new URL(AlfrescoWebScriptUtil.getAlfrescoIPAddress()+"alfresco/service/api/login?u=admin&pw=admin");
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 		StringBuffer sb = new StringBuffer();

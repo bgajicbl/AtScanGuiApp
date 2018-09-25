@@ -16,7 +16,7 @@ import org.json.JSONObject;
 public class AlfrescoCreateFolder extends AlfrescoWebScript {
 
 	@Override
-	public CloseableHttpResponse sendPost(String... params) throws IOException {
+	public CloseableHttpResponse sendPost(String... params) throws Exception {
 		// uzmi parametre za kreiranje foldera
 		JSONObject json = new JSONObject();
 		json.put("name", params[0]);

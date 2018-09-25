@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class AlfrescoUploadFile extends AlfrescoWebScript {
 
 	@Override
-	public CloseableHttpResponse sendPost(String... params) throws IOException {
+	public CloseableHttpResponse sendPost(String... params) throws Exception {
 
 		String folderId = params[0];
 		String destination = params[1];
@@ -45,8 +45,8 @@ public class AlfrescoUploadFile extends AlfrescoWebScript {
 	public String parseResponse(CloseableHttpResponse response) throws IllegalStateException, IOException {
 		String responseString = null;
 		try {
-			responseString = response.getStatusLine().toString();
-			if (responseString.contains("200")) {
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode < 400) {
 				HttpEntity resEntity = response.getEntity();
 				if (resEntity != null) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(resEntity.getContent()));

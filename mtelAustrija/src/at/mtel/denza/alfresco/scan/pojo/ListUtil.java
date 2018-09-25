@@ -132,6 +132,6 @@ public class ListUtil {
 	}
 	
 	public static URI getBaseURI() {
-		return UriBuilder.fromUri("http://127.0.0.1:6080/RestWebService/").build();
+		return UriBuilder.fromPath("http://127.0.0.1:9090/RestWebService/").build();
 	}
 }

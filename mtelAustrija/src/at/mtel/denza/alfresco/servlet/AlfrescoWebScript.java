@@ -6,7 +6,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 
 public abstract class AlfrescoWebScript {
 	
-	public abstract CloseableHttpResponse sendPost(String... params) throws IOException ;
+	public abstract CloseableHttpResponse sendPost(String... params) throws Exception ;
 	
 	public abstract String parseResponse(CloseableHttpResponse response) throws IllegalStateException, IOException;
 	

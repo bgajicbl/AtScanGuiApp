@@ -3,6 +3,7 @@ package at.mtel.denza.alfresco.scan.ui;
 import java.util.HashMap;
 import java.util.List;
 
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ThemeResource;
@@ -68,6 +69,7 @@ public class LoginView extends VerticalLayout implements View {
 			}
 
 		});
+		b.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		//vl.setSpacing(true);
 		vl.setWidth("426px");
 		addAndSetupComponents(vl, new Component[] { tf, pf, b });

@@ -10,6 +10,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
@@ -22,6 +23,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.FailedEvent;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
@@ -119,6 +121,7 @@ public class DocumentsScanView extends VerticalLayout implements View {
 		upload.setImmediate(true);
 		upload.setReceiver(mur);
 		upload.addSucceededListener(mur);
+		upload.addFailedListener(mur);
 
 		cbDocumentType.addValueChangeListener(new ValueChangeListener() {
 
@@ -151,7 +154,7 @@ public class DocumentsScanView extends VerticalLayout implements View {
 						HashMap<String, String> params = new HashMap<>();
 						params.put("id", c.getCustomerId());
 						List<Subscriber> subscribers = c.getSubscribers();
-						//System.out.println("****SIZE: "+subscribers.size());
+						// System.out.println("****SIZE: "+subscribers.size());
 						// List<Customer> lista =
 						// ListUtil.genericGetFromWebService("customers/msisdn",
 						// new Customer(), params);
@@ -160,17 +163,20 @@ public class DocumentsScanView extends VerticalLayout implements View {
 									Subscriber.class, subscribers);
 
 							setUpCombobox(cbSubscribers, "Subscriber", containerSubscribers, "subscriberId");
-							//cbSubscribers.setNullSelectionAllowed(true);
-							//cbSubscribers.setValue(cbSubscribers.getItemIds().iterator().next());
+							// cbSubscribers.setNullSelectionAllowed(true);
+							// cbSubscribers.setValue(cbSubscribers.getItemIds().iterator().next());
 							vl.addComponent(cbSubscribers);
 							vl.setComponentAlignment(cbSubscribers, Alignment.MIDDLE_CENTER);
 						}
 						mur.setId(String.valueOf(c.getCustomerId()));
-						
-						/*if(sub != null){
-							mur.setId(String.valueOf(c.getCustomerId())+"-"+String.valueOf(sub.getSubscriberId()));
 
-						}*/
+						/*
+						 * if(sub != null){
+						 * mur.setId(String.valueOf(c.getCustomerId())+"-"+String.valueOf(sub.
+						 * getSubscriberId()));
+						 * 
+						 * }
+						 */
 						vl.addComponent(upload);
 						vl.setComponentAlignment(upload, Alignment.MIDDLE_CENTER);
 					}
@@ -192,18 +198,36 @@ public class DocumentsScanView extends VerticalLayout implements View {
 			private static final long serialVersionUID = -5567214068515977578L;
 
 			@Override
-			public void uploadSucceeded(SucceededEvent event) { 
-				// ostao da se definsise period!!!!!!!!!!!!!
-				HashMap<String, String> params = new HashMap<>();
-				if(s != null){
-					params.put("subscriberId", s.getSubscriberId());
+			public void uploadSucceeded(SucceededEvent event) {
+				ErrorMessage errorMessage = event.getUpload().getComponentError();
+				if (errorMessage != null) {
+					Notification.show("Greška! Fajl nije dodan na server.", Notification.Type.ERROR_MESSAGE);
+					getUI().getNavigator().navigateTo(NavigatorUI.STARTVIEW);
+				} else {
+
+					// ostao da se definsise period!!!!!!!!!!!!!
+					HashMap<String, String> params = new HashMap<>();
+					if (s != null) {
+						params.put("subscriberId", s.getSubscriberId());
+					}
+					params.put("customerId", c.getCustomerId());
+					params.put("period", UtilClass.getDate().toString());
+					params.put("nodeRef", mur.getOdgovor());
+					params.put("documentType", documentID.toString());
+					ListUtil.genericGetFromWebService("metadatas/insert", new Metadata(), params);
+					Notification.show("Fajl dodan na server", mur.getFile().getName(),
+							Notification.Type.TRAY_NOTIFICATION);
 				}
-				params.put("customerId", c.getCustomerId());
-				params.put("period", UtilClass.getDate().toString());
-				params.put("nodeRef", mur.getOdgovor());
-				params.put("documentType", documentID.toString());
-				ListUtil.genericGetFromWebService("metadatas/insert", new Metadata(), params);
-				Notification.show("Fajl dodan na server", mur.getFile().getName(), Notification.Type.TRAY_NOTIFICATION);
+			}
+		});
+
+		upload.addFailedListener(new Upload.FailedListener() {
+
+			@Override
+			public void uploadFailed(FailedEvent event) {
+				Notification.show("Greška! Fajl nije dodan na server.", Notification.Type.ERROR_MESSAGE);
+				getUI().getNavigator().navigateTo(NavigatorUI.STARTVIEW);
+
 			}
 		});
 
