@@ -27,8 +27,7 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 	private String id;
 	private String type;
 
-	private String mtelAustrijaNodeRef = "ad581821-2560-4276-a121-b1c0acd28642";
-	//private String mtelAustrijaNodeRef = "2bd0673f-9490-473a-8da6-4e039915f045";
+	private String mtelAustrijaNodeRef = AppPropertyReader.getParameter("mtel.node.ref");
 	
 	private String odgovor;
 
@@ -74,7 +73,7 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 			// upload fajla kao odgovor se vraca nodeRef
 			chc = new AlfrescoUploadFile().sendPost(id, mtelAustrijaNodeRef, "Fajl", file.getPath());
 			String odg = new AlfrescoUploadFile().parseResponse(chc);
-			System.out.println("****ODG: "+odg);
+			//System.out.println("****ODG: "+odg);
 			if(odg == null) {
 				event.getUpload().setComponentError(new ErrorMessage() {
 					
@@ -100,7 +99,7 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 	
 	@Override
 	public void uploadFailed(FailedEvent event) {
-		System.out.println("****FAILED: ");
+		System.out.println("****UPLOAD FAILED: " + file.getName());
 		
 	}
 	

@@ -20,6 +20,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import at.mtel.denza.alfresco.jpa.User;
+import at.mtel.denza.alfresco.scan.AppPropertyReader;
 import at.mtel.denza.alfresco.scan.pojo.ListUtil;
 
 public class LoginView extends VerticalLayout implements View {

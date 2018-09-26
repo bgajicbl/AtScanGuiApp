@@ -5,10 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import at.mtel.denza.alfresco.scan.AppPropertyReader;
+
 public class AlfrescoWebScriptUtil {
 	
 	public static String getTicket() throws Exception {
-		URL url = new URL(AlfrescoWebScriptUtil.getAlfrescoIPAddress()+"alfresco/service/api/login?u=admin&pw=admin");
+		String alfrescoIp = getAlfrescoIPAddress();
+		String alfrescoLoginService = AppPropertyReader.getParameter("alfresco.service.login");
+		String alfrescoUser = AppPropertyReader.getParameter("alfresco.user");
+		String alfrescoPass = AppPropertyReader.getParameter("alfresco.pass");
+		
+		URL url = new URL(alfrescoIp+alfrescoLoginService+"?u="+alfrescoUser+"&pw="+alfrescoPass);
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 		StringBuffer sb = new StringBuffer();
 		String inputLine;
@@ -19,8 +26,7 @@ public class AlfrescoWebScriptUtil {
 	}
 	
 	public static String getAlfrescoIPAddress() {
-		return alfrescoIPAddress;
+		return AppPropertyReader.getParameter("alfresco.url");
 	}
-
-	private static String alfrescoIPAddress = "http://127.0.0.1:8080/";
+	
 }
