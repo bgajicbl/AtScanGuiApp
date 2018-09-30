@@ -40,7 +40,8 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 		FileOutputStream fos = null;
 		try {
 			// ovdje dodaj period za ugovor i slicno uzimaj mjesec i godinu   
-			StringBuilder sb = new StringBuilder(VaadinService.getCurrent().getBaseDirectory()+"/VAADIN/"+getType()+"_");
+			StringBuilder sb = new StringBuilder(VaadinService.getCurrent().getBaseDirectory() +
+					AppPropertyReader.getParameter("upload.folder") + getType() + "_");
 			// dodaj datum
 			sb.append(UtilClass.getDate()).append('_');
 			// dodaj vrijeme
@@ -99,8 +100,7 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 	
 	@Override
 	public void uploadFailed(FailedEvent event) {
-		System.out.println("****UPLOAD FAILED: " + file.getName());
-		
+		System.out.println("****UPLOAD FAILED: " + file.getName());	
 	}
 	
 	public String getOdgovor() {

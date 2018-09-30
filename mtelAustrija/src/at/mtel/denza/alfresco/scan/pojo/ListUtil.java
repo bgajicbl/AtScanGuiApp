@@ -114,6 +114,7 @@ public class ListUtil {
 		for (int i = 0; i < jArray.length(); i++) {
 			JSONObject jo = jArray.getJSONObject(i);
 			User up = new Gson().fromJson(jo.toString(), User.class);
+			up.setPassword("****");
 			l.add(up);
 		}
 		return l;

@@ -10,7 +10,5 @@ public class SessionHandler {
 	public void logOff(){
 		UI.getCurrent().getPage().setLocation("");	
 		VaadinSession.getCurrent().close();
-
-
 	}
 }

@@ -25,9 +25,7 @@ public class StartUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		nui.init(request);
-		nui.navigator.navigateTo(NavigatorUI.LOGINVIEW);
-		
-		
+		nui.navigator.navigateTo(NavigatorUI.LOGINVIEW);		
 	}
 	
 	public NavigatorUI getNavigatorUI() {

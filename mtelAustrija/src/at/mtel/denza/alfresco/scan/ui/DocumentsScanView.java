@@ -92,14 +92,13 @@ public class DocumentsScanView extends VerticalLayout implements View {
 		} else {
 			// uraditi log off
 			new SessionHandler().logOff();
-
 		}
 
 		// lista dokumenata koji se mogu skenirati
 		cbDocumentType = new ComboBox();
 		List<Document> listaDoc = new ArrayList<>();
-		// listaDoc = ListUtil.getDocumentTypes(listaDoc);
 		listaDoc = ListUtil.genericGetFromWebService("documents", new Document());
+
 		BeanItemContainer<Document> ctDocumentType = new BeanItemContainer<Document>(Document.class, listaDoc);
 		setUpCombobox(cbDocumentType, "Tip dokumenta", ctDocumentType, "document");
 
@@ -112,7 +111,6 @@ public class DocumentsScanView extends VerticalLayout implements View {
 				korisniciLista);
 		setUpCombobox(cbKorisnik, "Klijent", containerKorisnici, "customerId");
 
-		// ComboBox cbMsisdn = new ComboBox();
 		cbSubscribers = new ComboBox();
 
 		final Upload upload = new Upload();

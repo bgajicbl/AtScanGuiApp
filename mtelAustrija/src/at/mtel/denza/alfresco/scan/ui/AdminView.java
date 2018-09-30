@@ -71,24 +71,21 @@ public class AdminView extends VerticalLayout implements View {
 		gUsers.setContainerDataSource(uContainer);
 		if(uContainer.size() > 0)
 			gUsers.setHeightByRows(uContainer.size());
-		//gUsers.setColumnOrder("id", "username");
+		
 		setUpGrid(gUsers, "<h2>Operateri</h2>");
 		gUsers.setWidth("450px");
 		
 		Button logOffBtn = new CustomComponents().LogOffBtn();
 		vl2.addComponent(logOffBtn);
 		vl2.setComponentAlignment(logOffBtn, Alignment.TOP_RIGHT);
-		//vl1.addComponent(vl2);
 
 		TabSheet tabsheet = new TabSheet();
-		//vl1.addComponent(tabsheet);
-
 
 		// Create the first tab
 		VerticalLayout tab1 = new VerticalLayout();
 		tab1.addComponent(gMetadata);
 		tab1.setMargin(true);
-		//tab1.setComponentAlignment(gMetadata, Alignment.MIDDLE_CENTER);
+
 		tabsheet.addTab(tab1, "Skenirani dokumenti");
 
 		// This tab gets its caption from the component caption
@@ -101,11 +98,7 @@ public class AdminView extends VerticalLayout implements View {
 		VerticalLayout tab3 = new VerticalLayout();
 		tab3.addComponent(gUsers);
 		tabsheet.addTab(tab3, "Operateri");
-		tab3.setMargin(true);
-		
-		
-		//tabsheet.addComponent(new CustomComponents().LogOffBtn());
-		
+		tab3.setMargin(true);	
 
 		tabsheet.setWidth("851px");
 		vl2.setWidth("851px");
@@ -134,6 +127,5 @@ public class AdminView extends VerticalLayout implements View {
 		g.setCaption(caption);
 		g.setImmediate(true);
 		g.setEditorEnabled(true);
-		//g.setHeightMode(HeightMode.ROW);
 	}
 }

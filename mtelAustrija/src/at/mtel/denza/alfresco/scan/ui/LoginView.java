@@ -71,7 +71,6 @@ public class LoginView extends VerticalLayout implements View {
 
 		});
 		b.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-		//vl.setSpacing(true);
 		vl.setWidth("426px");
 		addAndSetupComponents(vl, new Component[] { tf, pf, b });
 
