@@ -21,6 +21,7 @@ import at.mtel.denza.alfresco.jpa.Customer;
 import at.mtel.denza.alfresco.jpa.Document;
 import at.mtel.denza.alfresco.jpa.Metadata;
 import at.mtel.denza.alfresco.jpa.User;
+import at.mtel.denza.alfresco.scan.AppPropertyReader;
 
 public class ListUtil {
 
@@ -133,6 +134,6 @@ public class ListUtil {
 	}
 	
 	public static URI getBaseURI() {
-		return UriBuilder.fromPath("http://127.0.0.1:9090/RestWebService/").build();
+		return UriBuilder.fromPath(AppPropertyReader.getParameter("rest.endpoint")).build();
 	}
 }

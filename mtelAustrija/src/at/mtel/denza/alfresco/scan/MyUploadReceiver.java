@@ -100,7 +100,7 @@ public class MyUploadReceiver implements Receiver, SucceededListener, FailedList
 	
 	@Override
 	public void uploadFailed(FailedEvent event) {
-		System.out.println("****UPLOAD FAILED: " + file.getName());	
+		System.err.println("****UPLOAD FAILED: " + file.getName());	
 	}
 	
 	public String getOdgovor() {
