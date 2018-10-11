@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.vaadin.data.Container;
+import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -50,8 +51,11 @@ public class DocumentsScanView extends VerticalLayout implements View {
 	private User upojo;
 	private VerticalLayout vl = new VerticalLayout();
 	ComboBox cbDocumentType;
-	ComboBox cbKorisnik;
-	ComboBox cbSubscribers = new ComboBox();
+	private SuggestingComboBox customersCB;
+    ComboBox cbSubscribers = new ComboBox();
+	List<Customer> korisniciLista = new ArrayList<>();
+	BeanItemContainer<Customer> containerKorisnici = null;
+
 
 	public DocumentsScanView() {
 	}
@@ -103,13 +107,14 @@ public class DocumentsScanView extends VerticalLayout implements View {
 		setUpCombobox(cbDocumentType, "Tip dokumenta", ctDocumentType, "document");
 
 		// lista korisnka za koje je moguce skenirati dokument
-		cbKorisnik = new ComboBox();
-		List<Customer> korisniciLista = new ArrayList<>();
+        final CustomerSuggestingContainer container = new CustomerSuggestingContainer();
+
+        customersCB = new SuggestingComboBox("Klijent", "customerId");
+
 		// korisnici = ListUtil.getAllCustomers();
-		korisniciLista = ListUtil.genericGetFromWebService("customers", new Customer());
-		BeanItemContainer<Customer> containerKorisnici = new BeanItemContainer<Customer>(Customer.class,
+		containerKorisnici = new BeanItemContainer<Customer>(Customer.class,
 				korisniciLista);
-		setUpCombobox(cbKorisnik, "Klijent", containerKorisnici, "customerId");
+		//setUpCombobox(cbKorisnik, "Klijent", containerKorisnici, "customerId");
 
 		cbSubscribers = new ComboBox();
 
@@ -127,26 +132,31 @@ public class DocumentsScanView extends VerticalLayout implements View {
 
 			public void valueChange(final ValueChangeEvent eventCbox) {
 				Document d = (Document) eventCbox.getProperty().getValue();
-				vl.removeComponent(cbKorisnik);
+				vl.removeComponent(customersCB);
 				vl.removeComponent(upload);
 				vl.removeComponent(cbSubscribers);
+				
+				//korisniciLista = ListUtil.genericGetFromWebService("customers", new Customer());
+				containerKorisnici.addAll(korisniciLista);
 
-				vl.addComponent(cbKorisnik);
+				vl.addComponent(customersCB);
 				if (c != null) {
 					vl.addComponent(upload);
 					vl.setComponentAlignment(upload, Alignment.MIDDLE_CENTER);
 				}
-				vl.setComponentAlignment(cbKorisnik, Alignment.MIDDLE_CENTER);
+				vl.setComponentAlignment(customersCB, Alignment.MIDDLE_CENTER);
 				documentID = d.getId();
 				mur.setType(d.getDocument());
 
-				cbKorisnik.addValueChangeListener(new ValueChangeListener() {
+				customersCB.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void valueChange(ValueChangeEvent event) {
 						vl.removeComponent(upload);
 						vl.removeComponent(cbSubscribers);
+		                container.setSelectedCustomer((Customer) event.getProperty().getValue());
+
 						s = null;
 						c = (Customer) event.getProperty().getValue();
 						HashMap<String, String> params = new HashMap<>();
@@ -189,6 +199,8 @@ public class DocumentsScanView extends VerticalLayout implements View {
 				});
 			}
 		});
+        customersCB.setContainerDataSource(container);
+
 
 		// kada se fajl uspjesno aploduje treba upisati u tabelu
 		upload.addSucceededListener(new Upload.SucceededListener() {

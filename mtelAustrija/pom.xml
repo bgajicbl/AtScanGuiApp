@@ -6,6 +6,9 @@
 	<version>2.0</version>
 	<packaging>war</packaging>
 	<name>mtelAustrija</name>
+	<properties>
+		<vaadin.version>7.5.2</vaadin.version>
+	</properties>
 	<build>
 		<finalName>mtelAustrija</finalName>
 		<sourceDirectory>src</sourceDirectory>
@@ -51,23 +54,23 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
-			<version>7.5.2</version>
+			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
-			<version>7.5.2</version>
+			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client</artifactId>
-			<version>7.5.2</version>
+			<version>${vaadin.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiled</artifactId>
-			<version>7.5.2</version>
+			<version>${vaadin.version}</version>
 		</dependency>
 
 
