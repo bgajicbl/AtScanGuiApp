@@ -107,14 +107,9 @@ public class DocumentsScanView extends VerticalLayout implements View {
 		setUpCombobox(cbDocumentType, "Tip dokumenta", ctDocumentType, "document");
 
 		// lista korisnka za koje je moguce skenirati dokument
-        final CustomerSuggestingContainer container = new CustomerSuggestingContainer();
+        final CustomerSuggestingContainer customerContainer = new CustomerSuggestingContainer();
 
         customersCB = new SuggestingComboBox("Klijent", "customerId");
-
-		// korisnici = ListUtil.getAllCustomers();
-		containerKorisnici = new BeanItemContainer<Customer>(Customer.class,
-				korisniciLista);
-		//setUpCombobox(cbKorisnik, "Klijent", containerKorisnici, "customerId");
 
 		cbSubscribers = new ComboBox();
 
@@ -136,9 +131,6 @@ public class DocumentsScanView extends VerticalLayout implements View {
 				vl.removeComponent(upload);
 				vl.removeComponent(cbSubscribers);
 				
-				//korisniciLista = ListUtil.genericGetFromWebService("customers", new Customer());
-				containerKorisnici.addAll(korisniciLista);
-
 				vl.addComponent(customersCB);
 				if (c != null) {
 					vl.addComponent(upload);
@@ -155,10 +147,11 @@ public class DocumentsScanView extends VerticalLayout implements View {
 					public void valueChange(ValueChangeEvent event) {
 						vl.removeComponent(upload);
 						vl.removeComponent(cbSubscribers);
-		                container.setSelectedCustomer((Customer) event.getProperty().getValue());
 
 						s = null;
 						c = (Customer) event.getProperty().getValue();
+		                customerContainer.setSelectedCustomer(c);
+
 						HashMap<String, String> params = new HashMap<>();
 						params.put("id", c.getCustomerId());
 						List<Subscriber> subscribers = c.getSubscribers();
@@ -199,7 +192,7 @@ public class DocumentsScanView extends VerticalLayout implements View {
 				});
 			}
 		});
-        customersCB.setContainerDataSource(container);
+        customersCB.setContainerDataSource(customerContainer);
 
 
 		// kada se fajl uspjesno aploduje treba upisati u tabelu

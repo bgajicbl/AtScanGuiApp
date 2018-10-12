@@ -1,6 +1,8 @@
 package at.mtel.denza.alfresco.scan.pojo;
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import at.mtel.denza.alfresco.jpa.Customer;
 import at.mtel.denza.alfresco.jpa.Document;
@@ -24,6 +27,9 @@ import at.mtel.denza.alfresco.jpa.User;
 import at.mtel.denza.alfresco.scan.AppPropertyReader;
 
 public class ListUtil {
+	
+	public static final String DATE_FORMAT = "yyyyMMdd";
+
 
 	private static ClientConfig config = new ClientConfig();
 	private static Client client = ClientBuilder.newClient(config);
@@ -37,9 +43,11 @@ public class ListUtil {
 		List<T> lista = new ArrayList<T>();
 		String plainAnswer = target.path(path).request().accept(MediaType.APPLICATION_JSON).get(String.class);
 		JSONArray jArray = new JSONArray(plainAnswer);
+	    Gson gson = new GsonBuilder().setDateFormat(DATE_FORMAT).create();
+
 		for (int i = 0; i < jArray.length(); i++) {
 			JSONObject json = jArray.getJSONObject(i);
-			t = (T) new Gson().fromJson(json.toString(), t.getClass());
+			t = (T) gson.fromJson(json.toString(), t.getClass());
 			lista.add(t);
 		}
 		return lista;

@@ -46,6 +46,9 @@ public class AdminView extends VerticalLayout implements View {
 		image.setSource(resource);
 		
 		//logoff dugme
+		mContainer.addNestedContainerBean("customer");
+		mContainer.addNestedContainerBean("subscriber");
+		mContainer.addNestedContainerBean("document");
 
 		Grid gMetadata = new Grid();
 		gMetadata.setContainerDataSource(mContainer);

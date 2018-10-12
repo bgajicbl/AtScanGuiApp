@@ -9,6 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.UnsupportedFilterException;
 
 import at.mtel.denza.alfresco.jpa.Customer;
+import at.mtel.denza.alfresco.scan.AppPropertyReader;
 import at.mtel.denza.alfresco.scan.pojo.ListUtil;
 
 /**
@@ -23,6 +24,7 @@ public class CustomerSuggestingContainer extends BeanItemContainer<Customer> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final int FILTER_LENGTH = 4;
 	private Customer defaultCustomer;
 
 	public CustomerSuggestingContainer() throws IllegalArgumentException {
@@ -55,14 +57,22 @@ public class CustomerSuggestingContainer extends BeanItemContainer<Customer> {
 	}
 
 	private void filterItems(String filterString) {
-		if (filterString != null && filterString.length() < 4) {
+		if ("".equals(filterString)) {
 			return;
 		}
-
 		removeAllItems();
+		int filterLength = FILTER_LENGTH;
+		try {
+			filterLength = Integer.valueOf(AppPropertyReader.getParameter("customer.filter.min.length"));
+		}catch(NumberFormatException e) {
+			System.err.println("parameter customer.filter.min.length is not a number!");
+		}
+		if (filterString != null && filterString.length() < filterLength) {
+			return;
+		}
 		// call web service
-		List<Customer> countries = ListUtil.genericGetFromWebService("customers", new Customer());
-		addAll(countries);
+		List<Customer> customers = ListUtil.genericGetFromWebService("customers/filter/"+filterString, new Customer());
+		addAll(customers);
 	}
 
 	/**
