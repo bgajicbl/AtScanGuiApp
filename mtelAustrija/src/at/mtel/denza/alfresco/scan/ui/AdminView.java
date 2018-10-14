@@ -78,7 +78,11 @@ public class AdminView extends VerticalLayout implements View {
 		setUpGrid(gUsers, "<h2>Operateri</h2>");
 		gUsers.setWidth("450px");
 		
-		Button logOffBtn = new CustomComponents().LogOffBtn();
+		Button backBtn = new CustomComponents().backBtn();
+		vl2.addComponent(backBtn);
+		vl2.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
+		
+		Button logOffBtn = new CustomComponents().logOffBtn();
 		vl2.addComponent(logOffBtn);
 		vl2.setComponentAlignment(logOffBtn, Alignment.TOP_RIGHT);
 

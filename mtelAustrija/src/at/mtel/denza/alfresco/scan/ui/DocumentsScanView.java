@@ -83,7 +83,7 @@ public class DocumentsScanView extends VerticalLayout implements View {
 		if (up != null) {
 
 			// log off dugme
-			Button logOffBtn = new CustomComponents().LogOffBtn();
+			Button logOffBtn = new CustomComponents().logOffBtn();
 			vl.addComponent(logOffBtn);
 			vl.setComponentAlignment(logOffBtn, Alignment.TOP_RIGHT);
 

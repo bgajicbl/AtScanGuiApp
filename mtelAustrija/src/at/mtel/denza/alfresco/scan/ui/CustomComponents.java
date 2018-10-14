@@ -11,7 +11,7 @@ import at.mtel.denza.alfresco.scan.ui.NavigatorUI;
 public class CustomComponents {
 	Button b = new Button();
 
-	public Button LogOffBtn(){
+	public Button logOffBtn(){
 		b.setCaption("Log off");
 		b.setStyleName(BaseTheme.BUTTON_LINK);
 		
@@ -25,6 +25,28 @@ public class CustomComponents {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				new SessionHandler().logOff();
+			}
+		});
+
+		return b;
+		
+	}
+	
+	public Button backBtn(){
+		b.setCaption("Nazad");
+		b.setStyleName(BaseTheme.BUTTON_LINK);
+		
+		b.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6671190928564134699L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().getNavigator().navigateTo(NavigatorUI.STARTVIEW);
+
 			}
 		});
 
