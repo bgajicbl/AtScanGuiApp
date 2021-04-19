@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<name>mtelAustrija</name>
 	<properties>
-		<vaadin.version>7.5.2</vaadin.version>
+		<vaadin.version>8.12.4</vaadin.version>
 	</properties>
 	<build>
 		<finalName>mtelAustrija</finalName>
